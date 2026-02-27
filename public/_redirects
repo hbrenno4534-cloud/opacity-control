@@ -1,0 +1,6 @@
+# Serve /front/ e /back/ como arquivos estaticos (nao interceptar pelo React SPA)
+/front/* /front/:splat 200
+/back/*  /back/:splat  200
+
+# Todas as outras rotas vao para o React app
+/*       /index.html   200
