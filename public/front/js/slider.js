@@ -162,12 +162,11 @@
         action.removeAttribute('tabindex');
 
         // Redireciona para o visualback ao clicar em ACESSAR
-        action.setAttribute('href', '/back/');
-        action.setAttribute('target', '_blank');
-        action.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.open('/back/', '_blank');
-        });
+        action.setAttribute('href', '/back/index.html');
+        action.classList.remove('is-locked');
+        action.onclick = () => {
+          window.location.href = '/back/index.html';
+        };
 
         const percentEl = card.querySelector('.scan-percent');
         const fill = card.querySelector('.scan-fill');
