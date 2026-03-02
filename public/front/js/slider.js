@@ -161,12 +161,14 @@
         action.setAttribute('aria-disabled', 'false');
         action.removeAttribute('tabindex');
 
-        // Redireciona para o visualback ao clicar em ACESSAR
-        action.setAttribute('href', '/back/index.html');
+        // Mantém o destino correspondente do próprio card (sem forçar Anubis)
+        const targetHref =
+          action.getAttribute('href') ||
+          card.querySelector('.thumb a')?.getAttribute('href') ||
+          '#';
+        action.setAttribute('href', targetHref);
         action.classList.remove('is-locked');
-        action.onclick = () => {
-          window.location.href = '/back/index.html';
-        };
+        action.onclick = null;
 
         const percentEl = card.querySelector('.scan-percent');
         const fill = card.querySelector('.scan-fill');
