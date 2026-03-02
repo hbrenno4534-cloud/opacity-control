@@ -18,7 +18,7 @@
   font-size: 11px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: rgba(242, 207, 99, 0.72);
+  color: rgba(237, 28, 36, 0.72);
   text-align: center;
 }
 
@@ -28,8 +28,8 @@
   font-size: clamp(24px, 4.2vw, 34px);
   line-height: 1.02;
   letter-spacing: 0.08em;
-  color: #f4cf74;
-  text-shadow: 0 8px 24px rgba(242, 169, 60, 0.35);
+  color: #ffffff;
+  text-shadow: 0 8px 24px rgba(237, 28, 36, 0.35);
 }
 
 .op-section {
@@ -38,11 +38,11 @@
 }
 
 .op-panel {
-  border: 1px solid rgba(242, 207, 99, 0.4);
+  border: 1px solid rgba(237, 28, 36, 0.4);
   border-radius: 18px;
   background:
-    radial-gradient(130% 95% at 100% 0%, rgba(242, 207, 99, 0.12), rgba(0, 0, 0, 0) 52%),
-    linear-gradient(180deg, rgba(22, 16, 5, 0.56), rgba(0, 0, 0, 0.46));
+    radial-gradient(130% 95% at 100% 0%, rgba(237, 28, 36, 0.12), rgba(0, 0, 0, 0) 52%),
+    linear-gradient(180deg, rgba(22, 5, 5, 0.56), rgba(0, 0, 0, 0.46));
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   -webkit-backdrop-filter: blur(10px) saturate(1.08);
   backdrop-filter: blur(10px) saturate(1.08);
@@ -58,7 +58,7 @@
 .op-title.op-banner img {
   display: block;
   border-radius: 12px;
-  border: 1px solid rgba(242, 207, 99, 0.45);
+  border: 1px solid rgba(237, 28, 36, 0.45);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
 }
 
@@ -92,10 +92,10 @@
   opacity: 0;
   overflow: hidden;
   border-radius: 12px;
-  border: 0 solid rgba(242, 207, 99, 0.24);
-  background: rgba(10, 8, 3, 0.56);
+  border: 0 solid rgba(237, 28, 36, 0.24);
+  background: rgba(10, 3, 3, 0.56);
   padding: 0 12px;
-  color: #f6e4b0;
+  color: #f0b0b0;
   font-size: 11px;
   line-height: 1.44;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -135,8 +135,8 @@
   align-items: center;
   gap: 8px;
   border-radius: 999px;
-  border: 1px solid rgba(242, 207, 99, 0.2);
-  background: rgba(18, 13, 4, 0.44);
+  border: 1px solid rgba(237, 28, 36, 0.2);
+  background: rgba(18, 4, 4, 0.44);
   padding: 7px 10px;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.78);
@@ -151,14 +151,14 @@
 }
 
 .op-step.active {
-  border-color: rgba(242, 207, 99, 0.62);
-  background: rgba(242, 207, 99, 0.16);
-  color: #fff4cd;
+  border-color: rgba(237, 28, 36, 0.62);
+  background: rgba(237, 28, 36, 0.16);
+  color: #ffcdcd;
 }
 
 .op-step.active .dot {
-  background: #f5c43b;
-  box-shadow: 0 0 10px rgba(242, 207, 99, 0.68);
+  background: #ED1C24;
+  box-shadow: 0 0 10px rgba(237, 28, 36, 0.68);
 }
 
 .op-step.ok {
@@ -174,7 +174,7 @@
 .op-progress {
   height: 9px;
   border-radius: 999px;
-  border: 1px solid rgba(242, 207, 99, 0.46);
+  border: 1px solid rgba(237, 28, 36, 0.46);
   background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
@@ -182,8 +182,8 @@
 .op-bar {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(242, 207, 99, 0.26), #f5c43b);
-  box-shadow: 0 0 16px rgba(242, 207, 99, 0.36);
+  background: linear-gradient(90deg, rgba(237, 28, 36, 0.26), #ED1C24);
+  box-shadow: 0 0 16px rgba(237, 28, 36, 0.36);
   transition: width 180ms linear;
 }
 
@@ -197,8 +197,8 @@
 
 .op-block {
   border-radius: 12px;
-  border: 1px solid rgba(242, 207, 99, 0.22);
-  background: rgba(10, 7, 2, 0.44);
+  border: 1px solid rgba(237, 28, 36, 0.22);
+  background: rgba(10, 2, 2, 0.44);
   padding: 10px;
   min-height: 84px;
   display: grid;
@@ -254,7 +254,7 @@
 }
 
 .op-panel.running .op-title img {
-  box-shadow: 0 0 0 1px rgba(242, 207, 99, 0.38), 0 14px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 1px rgba(237, 28, 36, 0.38), 0 14px 24px rgba(0, 0, 0, 0.45);
 }
 
 .actions {
@@ -268,7 +268,7 @@
   position: relative;
   min-width: min(92vw, 420px);
   border-radius: 11px;
-  border: 1px solid rgba(242, 169, 60, 0.75);
+  border: 1px solid rgba(237, 28, 36, 0.75);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
   color: #111;
   padding: 12px 16px;
@@ -286,7 +286,7 @@
   position: absolute;
   inset: 0;
   width: var(--signal-progress);
-  background: linear-gradient(90deg, #f5c43b, #d87b0a);
+  background: linear-gradient(90deg, #ED1C24, #8B0A1A);
   transition: width 140ms linear;
 }
 
@@ -302,7 +302,7 @@
 .signal-link-btn .two {
   position: relative;
   z-index: 1;
-  color: #120e03;
+  color: #ffffff;
 }
 
 .signal-link-btn .two {
@@ -318,7 +318,7 @@
 }
 
 .signal-link-btn.is-ready {
-  box-shadow: 0 0 0 1px rgba(242, 207, 99, 0.58), 0 12px 28px rgba(242, 169, 60, 0.3);
+  box-shadow: 0 0 0 1px rgba(237, 28, 36, 0.58), 0 12px 28px rgba(237, 28, 36, 0.3);
 }
 
 .signal-link-btn:disabled {
