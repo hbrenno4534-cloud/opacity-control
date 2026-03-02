@@ -15,7 +15,6 @@ if (starsBackground) {
         const size = 20 + Math.random() * 25;
         star.style.width = `${size}px`;
         star.style.height = `auto`;
-        star.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
         fragment.appendChild(star);
     }
 
