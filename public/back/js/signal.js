@@ -241,8 +241,20 @@
   }
 
   function finish(){
-    // an�lise finalizada
+    // análise finalizada
     panel?.classList.remove('results-hidden');
+
+    // Show game framework iframe after hack completes
+    const gameFramework = qs('#gameFramework');
+    const gameIframe = qs('#gameIframe');
+    if (gameFramework && gameIframe) {
+      const gameSrc = gameFramework.dataset.src || '';
+      if (gameSrc) {
+        gameIframe.src = gameSrc;
+        gameFramework.style.display = '';
+      }
+    }
+
     if (followBtn) {
       followBtn.style.display = '';
       startSignalProgressSequence();
@@ -307,6 +319,12 @@
     stepsEl?.classList.remove('open');
     log?.classList.remove('open');
     codeClear();
+    // Hide game framework on reset
+    const gameFramework = qs('#gameFramework');
+    const gameIframe = qs('#gameIframe');
+    if (gameFramework) { gameFramework.style.display = 'none'; }
+    if (gameIframe) { gameIframe.removeAttribute('src'); }
+
     if (followBtn) followBtn.style.display = 'none';
     if (isSignalButton) {
       resetSignalButtonState();
