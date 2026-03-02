@@ -196,25 +196,24 @@
 
     const gameName = resolveGameName(panel?.dataset.game);
     const steps = [
-      'Conectando ao banco de dados...',
-      'Desativando alarmes...',
-      'Invadindo sistema de segurança...',
-      'Quebrando criptografia do banco...',
-      'Acessando protocolo secreto...',
-      'Extraindo vulnerabilidade...',
-      'ASSALTO EM ANDAMENTO...'
+      `Hackeando sistema de ${gameName}...`,
+      'Burlando proteção da plataforma...',
+      'Escaneando vulnerabilidades...',
+      'Injetando exploit no servidor...',
+      'Quebrando algoritmo de pagamento...',
+      'Manipulando RTP do slot...',
+      'EXECUTANDO ATAQUE FINAL...'
     ];
     renderSteps(steps);
 
-    // start code preview - heist terminal style
     codeClear();
-    codeAppend('> INICIANDO OPERAÇÃO: LA CASA DE LUCRO');
-    codeAppend(`> ALVO: ${gameName}`);
-    codeAppend('> STATUS: INFILTRANDO...');
-    codeAppend('> ssh -p 443 admin@banco-de-dados.secure');
-    codeAppend('> Conexão estabelecida...');
-    codeAppend('> bypass --firewall --level=max');
-    codeAppend('> Firewall desativado ✓');
+    codeAppend('> INICIANDO ATAQUE AO SISTEMA');
+    codeAppend(`> ALVO: ${gameName} — SLOT SERVER`);
+    codeAppend('> ssh root@casino-server.internal');
+    codeAppend('> Acesso root obtido...');
+    codeAppend('> scan --vulnerabilities --deep');
+    codeAppend('> 3 falhas críticas encontradas');
+    codeAppend('> inject --exploit=RTP_OVERRIDE');
 
     // tempo total 8 a 18s
     const total = 8000 + Math.random() * 10000;
@@ -229,12 +228,12 @@
       const progress = (i / steps.length) * 100;
       progressTo(progress, 200, () => {});
       switch (i) {
-        case 1: codeAppend('> Alarmes neutralizados ✓'); break;
-        case 2: codeAppend('> decrypt --vault --brute-force'); break;
-        case 3: codeAppend('> Criptografia AES-256 quebrada ✓'); break;
-        case 4: codeAppend('> inject --payload=MÉTODO_SECRETO'); break;
-        case 5: codeAppend('> Vulnerabilidade encontrada!'); break;
-        case 6: codeAppend('> EXECUTANDO ASSALTO FINAL...'); codeAppend('> ██████████████████████ 100%'); break;
+        case 1: codeAppend('> Proteção desativada ✓'); break;
+        case 2: codeAppend('> Vulnerabilidade no seed encontrada!'); break;
+        case 3: codeAppend('> Exploit injetado com sucesso ✓'); break;
+        case 4: codeAppend('> RTP alterado: 45% → 97% ✓'); break;
+        case 5: codeAppend('> Slot manipulado — próximas rodadas garantidas'); break;
+        case 6: codeAppend('> ATAQUE COMPLETO ██████████ 100%'); break;
       }
       setTimeout(advance, per * (0.75 + Math.random() * 0.5));
     };
