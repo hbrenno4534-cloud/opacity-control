@@ -29,7 +29,7 @@
   line-height: 1.02;
   letter-spacing: 0.08em;
   color: #ffffff;
-  text-shadow: 0 8px 24px rgba(237, 28, 36, 0.35);
+  text-shadow: 0 4px 20px rgba(237, 28, 36, 0.5), 0 0 40px rgba(237, 28, 36, 0.2);
 }
 
 .op-section {
@@ -92,14 +92,15 @@
   opacity: 0;
   overflow: hidden;
   border-radius: 12px;
-  border: 0 solid rgba(237, 28, 36, 0.24);
-  background: rgba(10, 3, 3, 0.56);
+  border: 0 solid rgba(237, 28, 36, 0.5);
+  background: rgba(10, 0, 0, 0.8);
   padding: 0 12px;
-  color: #f0b0b0;
+  color: #ED1C24;
   font-size: 11px;
   line-height: 1.44;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   white-space: pre-wrap;
+  text-shadow: 0 0 8px rgba(237, 28, 36, 0.4);
   transition: max-height 320ms ease, height 320ms ease, opacity 220ms ease, padding 220ms ease, border-width 220ms ease;
 }
 
@@ -112,11 +113,12 @@
 }
 
 .op-log.open {
-  height: 100px;
-  max-height: 100px;
+  height: 120px;
+  max-height: 120px;
   opacity: 1;
   padding: 10px 12px;
   border-width: 1px;
+  box-shadow: inset 0 0 30px rgba(237, 28, 36, 0.1);
 }
 
 .op-steps.open {
@@ -135,30 +137,34 @@
   align-items: center;
   gap: 8px;
   border-radius: 999px;
-  border: 1px solid rgba(237, 28, 36, 0.2);
-  background: rgba(18, 4, 4, 0.44);
+  border: 1px solid rgba(237, 28, 36, 0.25);
+  background: rgba(18, 4, 4, 0.5);
   padding: 7px 10px;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .op-step .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.26);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06);
 }
 
 .op-step.active {
-  border-color: rgba(237, 28, 36, 0.62);
-  background: rgba(237, 28, 36, 0.16);
-  color: #ffcdcd;
+  border-color: rgba(237, 28, 36, 0.8);
+  background: rgba(237, 28, 36, 0.2);
+  color: #ffffff;
+  animation: heist-step-pulse 1.2s ease-in-out infinite;
 }
 
 .op-step.active .dot {
   background: #ED1C24;
-  box-shadow: 0 0 10px rgba(237, 28, 36, 0.68);
+  box-shadow: 0 0 12px rgba(237, 28, 36, 0.9), 0 0 24px rgba(237, 28, 36, 0.4);
+  animation: heist-dot-blink 0.8s ease-in-out infinite;
 }
 
 .op-step.ok {
@@ -172,18 +178,19 @@
 }
 
 .op-progress {
-  height: 9px;
+  height: 10px;
   border-radius: 999px;
-  border: 1px solid rgba(237, 28, 36, 0.46);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(237, 28, 36, 0.6);
+  background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
+  box-shadow: 0 0 12px rgba(237, 28, 36, 0.15);
 }
 
 .op-bar {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(237, 28, 36, 0.26), #ED1C24);
-  box-shadow: 0 0 16px rgba(237, 28, 36, 0.36);
+  background: linear-gradient(90deg, rgba(237, 28, 36, 0.4), #ED1C24, #ff4444);
+  box-shadow: 0 0 20px rgba(237, 28, 36, 0.5);
   transition: width 180ms linear;
 }
 
@@ -351,6 +358,31 @@
     transform: scale(1.015);
     filter: brightness(1.08);
   }
+}
+
+@keyframes heist-step-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(237, 28, 36, 0);
+  }
+  50% {
+    box-shadow: 0 0 16px 2px rgba(237, 28, 36, 0.3);
+  }
+}
+
+@keyframes heist-dot-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.7);
+  }
+}
+
+.op-panel.running {
+  border-color: rgba(237, 28, 36, 0.6);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 60px rgba(237, 28, 36, 0.15);
 }
 
 @media (max-width: 900px) {

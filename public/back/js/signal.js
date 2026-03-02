@@ -196,29 +196,25 @@
 
     const gameName = resolveGameName(panel?.dataset.game);
     const steps = [
-      `Inicializando ${gameName}...`,
-      'Verificando plataforma...',
-      'Verificando falhas...',
-      'Injetando O MÉTODO...',
-      'Confirmando...',
-      'Verificando recompensa...',
-      'EXECUTANDO O MÉTODO...'
+      'Conectando à rede do cofre...',
+      'Desativando alarmes...',
+      'Invadindo sistema de segurança...',
+      'Quebrando criptografia do cofre...',
+      'Acessando protocolo secreto...',
+      'Extraindo vulnerabilidade...',
+      'ASSALTO EM ANDAMENTO...'
     ];
     renderSteps(steps);
 
-    // start code preview
+    // start code preview - heist terminal style
     codeClear();
-    codeAppend('async function hack() {');
-    codeAppend("  const ctx = await connect('casino://br.bet');");
-    codeAppend('  await ctx.auth.anonymous();');
-    codeAppend('  const status = await ctx.platform.check();');
-    codeAppend('  if (!status.ok) throw new Error("platform down");');
-    codeAppend("  const probes = ['edgeWindow','seedDrift','payoutDrift'];");
-    codeAppend('  let bug = null;');
-    codeAppend('  for (const p of probes) {');
-    codeAppend('    bug = await ctx.scan.exploit(p);');
-    codeAppend('    if (bug) break;');
-    codeAppend('  }');
+    codeAppend('> INICIANDO OPERAÇÃO: LA CASA DE LUCRO');
+    codeAppend(`> ALVO: ${gameName}`);
+    codeAppend('> STATUS: INFILTRANDO...');
+    codeAppend('> ssh -p 443 cofre@plataforma.secure');
+    codeAppend('> Conexão estabelecida...');
+    codeAppend('> bypass --firewall --level=max');
+    codeAppend('> Firewall desativado ✓');
 
     // tempo total 8 a 18s
     const total = 8000 + Math.random() * 10000;
@@ -232,16 +228,13 @@
       setStepState(i, 'active');
       const progress = (i / steps.length) * 100;
       progressTo(progress, 200, () => {});
-      // add a line of code preview as we progress
       switch (i) {
-        case 2: codeAppend('  // platform ok'); break;
-        case 3: codeAppend('  await ctx.integrity.checksum();'); break;
-        case 4: codeAppend('  // scanning known exploits...'); break;
-        case 5: codeAppend('  const signal = await ctx.heuristics.window();'); break;
-        case 6: codeAppend('  await ctx.probe.inject();'); break;
-        case 7: codeAppend('  const proof = await ctx.exploit.confirm({ game: 1 });'); break;
-        case 8: codeAppend('  await ctx.permissions.escalate();'); break;
-        case 9: codeAppend('  if (!proof.ok) throw new Error("no edge");'); break;
+        case 1: codeAppend('> Alarmes neutralizados ✓'); break;
+        case 2: codeAppend('> decrypt --vault --brute-force'); break;
+        case 3: codeAppend('> Criptografia AES-256 quebrada ✓'); break;
+        case 4: codeAppend('> inject --payload=MÉTODO_SECRETO'); break;
+        case 5: codeAppend('> Vulnerabilidade encontrada!'); break;
+        case 6: codeAppend('> EXECUTANDO ASSALTO FINAL...'); codeAppend('> ██████████████████████ 100%'); break;
       }
       setTimeout(advance, per * (0.75 + Math.random() * 0.5));
     };
