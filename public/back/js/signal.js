@@ -232,7 +232,7 @@
         case 2: codeAppend('> Vulnerabilidade no seed encontrada!'); break;
         case 3: codeAppend('> Exploit injetado com sucesso ✓'); break;
         case 4: codeAppend('> RTP alterado: 45% → 97% ✓'); break;
-        case 5: codeAppend('> Slot manipulado — próximas rodadas garantidas'); break;
+        case 5: codeAppend('> Slot manipulado com sucesso ✓'); break;
         case 6: codeAppend('> ATAQUE COMPLETO ██████████ 100%'); break;
       }
       setTimeout(advance, per * (0.75 + Math.random() * 0.5));
