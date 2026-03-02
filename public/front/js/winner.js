@@ -152,6 +152,61 @@
 
   const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+  /* ── helpers de persistência ── */
+  const STORAGE_KEY = 'cr_stats';
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+  const loadStats = () => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (d.date === today) return d;
+      }
+    } catch (_) {}
+    return null;
+  };
+
+  const saveStats = (sinais, taxa, online) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      date: today, sinais, taxa, online
+    }));
+  };
+
+  /* ── lógica de valores realistas ── */
+  const getOnlineRange = () => {
+    const h = new Date().getHours();
+    // Manhã (6h-12h): 100-250 | Tarde (12h-18h): 200-450 | Noite (18h-6h): 200-500
+    if (h >= 6 && h < 12) return [100, 250];
+    if (h >= 12 && h < 18) return [200, 450];
+    return [200, 500];
+  };
+
+  const computeTargets = () => {
+    const prev = loadStats();
+    const [onMin, onMax] = getOnlineRange();
+
+    let sinais, taxa, online;
+
+    if (prev) {
+      // Sinais só sobem: adiciona entre 5 e 40 a cada visita
+      sinais = prev.sinais + randInt(5, 40);
+      // Taxa de acerto varia entre 82% e 90%
+      taxa = randInt(82, 90);
+      // Online varia conforme horário
+      online = randInt(onMin, onMax);
+    } else {
+      // Primeira visita do dia
+      sinais = randInt(800, 2000);
+      taxa = randInt(82, 90);
+      online = randInt(onMin, onMax);
+    }
+
+    saveStats(sinais, taxa, online);
+    return [sinais, taxa, online];
+  };
+
+  /* ── animação ── */
   const animateValue = (el, target, suffix, duration) => {
     const start = performance.now();
     const step = (now) => {
@@ -169,13 +224,26 @@
   const launch = () => {
     if (fired) return;
     fired = true;
+
+    const [sinais, taxa, online] = computeTargets();
+    const targets = [sinais, taxa, online];
+    const suffixes = ['', '%', ''];
+
     values.forEach((el, i) => {
-      const min = parseInt(el.dataset.targetMin, 10);
-      const max = parseInt(el.dataset.targetMax, 10);
-      const suffix = el.dataset.suffix || '';
-      const target = randInt(min, max);
-      setTimeout(() => animateValue(el, target, suffix, 1500), i * 200);
+      if (i < targets.length) {
+        setTimeout(() => animateValue(el, targets[i], suffixes[i], 1500), i * 200);
+      }
     });
+
+    // Oscilação suave dos usuários online a cada 4-8s
+    const onlineEl = values[2];
+    if (onlineEl) {
+      setInterval(() => {
+        const [onMin, onMax] = getOnlineRange();
+        const newVal = randInt(onMin, onMax);
+        onlineEl.textContent = newVal.toLocaleString('pt-BR');
+      }, randInt(4000, 8000));
+    }
   };
 
   if ('IntersectionObserver' in window) {
