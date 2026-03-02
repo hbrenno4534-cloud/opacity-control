@@ -29,7 +29,7 @@
   line-height: 1.02;
   letter-spacing: 0.08em;
   color: #ffffff;
-  text-shadow: 0 4px 20px rgba(237, 28, 36, 0.5), 0 0 40px rgba(237, 28, 36, 0.2);
+  text-shadow: none;
 }
 
 .op-section {
@@ -55,15 +55,21 @@
   margin-bottom: 10px;
 }
 
-.op-title.op-banner img {
-  display: block;
+.op-title.op-banner {
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
   border-radius: 12px;
   border: 1px solid rgba(237, 28, 36, 0.45);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+}
+
+.op-title.op-banner img {
+  display: block;
   width: 100%;
-  max-height: 220px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: inherit;
 }
 
 .op-status {
