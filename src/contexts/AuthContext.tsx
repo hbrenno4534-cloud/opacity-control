@@ -20,39 +20,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const checkAdmin = async (userId: string) => {
-    const { data } = await supabase.rpc("has_role", {
-      _user_id: userId,
-      _role: "admin",
-    });
-    setIsAdmin(!!data);
-  };
-
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        if (session?.user) {
-          await checkAdmin(session.user.id);
-        } else {
+        if (!session?.user) {
           setIsAdmin(false);
+          setLoading(false);
         }
-        setLoading(false);
       }
     );
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) {
-        await checkAdmin(session.user.id);
+      if (!session?.user) {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Separate effect to check admin role — avoids deadlock inside onAuthStateChange
+  useEffect(() => {
+    if (!user) return;
+
+    let cancelled = false;
+    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" as const })
+      .then(({ data }) => {
+        if (!cancelled) {
+          setIsAdmin(!!data);
+          setLoading(false);
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [user]);
 
   const signUp = async (email: string, password: string, metadata?: Record<string, string>) => {
     const { error } = await supabase.auth.signUp({
