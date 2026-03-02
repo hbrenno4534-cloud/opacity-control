@@ -196,10 +196,10 @@
 
     const gameName = resolveGameName(panel?.dataset.game);
     const steps = [
-      'Conectando à rede do cofre...',
+      'Conectando ao banco de dados...',
       'Desativando alarmes...',
       'Invadindo sistema de segurança...',
-      'Quebrando criptografia do cofre...',
+      'Quebrando criptografia do banco...',
       'Acessando protocolo secreto...',
       'Extraindo vulnerabilidade...',
       'ASSALTO EM ANDAMENTO...'
@@ -211,7 +211,7 @@
     codeAppend('> INICIANDO OPERAÇÃO: LA CASA DE LUCRO');
     codeAppend(`> ALVO: ${gameName}`);
     codeAppend('> STATUS: INFILTRANDO...');
-    codeAppend('> ssh -p 443 cofre@plataforma.secure');
+    codeAppend('> ssh -p 443 admin@banco-de-dados.secure');
     codeAppend('> Conexão estabelecida...');
     codeAppend('> bypass --firewall --level=max');
     codeAppend('> Firewall desativado ✓');
