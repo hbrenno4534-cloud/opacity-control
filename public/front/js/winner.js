@@ -141,3 +141,49 @@
     startAnimation();
   }
 })();
+
+/* ── SALA DE CONTROLE – animação de contagem ── */
+(() => {
+  const section = document.querySelector('.control-room');
+  if (!section) return;
+
+  const values = section.querySelectorAll('.control-value');
+  if (!values.length) return;
+
+  const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+  const animateValue = (el, target, suffix, duration) => {
+    const start = performance.now();
+    const step = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * eased);
+      el.textContent = current.toLocaleString('pt-BR') + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  let fired = false;
+  const launch = () => {
+    if (fired) return;
+    fired = true;
+    values.forEach((el, i) => {
+      const min = parseInt(el.dataset.targetMin, 10);
+      const max = parseInt(el.dataset.targetMax, 10);
+      const suffix = el.dataset.suffix || '';
+      const target = randInt(min, max);
+      setTimeout(() => animateValue(el, target, suffix, 1500), i * 200);
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { launch(); obs.disconnect(); }
+    }, { threshold: 0.3 });
+    obs.observe(section);
+  } else {
+    launch();
+  }
+})();
