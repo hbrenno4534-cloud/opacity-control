@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import VaultDoor from "@/components/VaultDoor";
 import { toast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard, MapPin, Calendar, Globe } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard, MapPin, Calendar, Globe, Code } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Select,
   SelectContent,
@@ -32,6 +33,9 @@ export default function Signup() {
     postalCode: "",
     address: "",
     city: "",
+    // Dev/test fields
+    wafToken: "",
+    correlationId: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -76,6 +80,8 @@ export default function Signup() {
       email: form.email,
       username: form.username,
       password: form.password,
+      wafToken: form.wafToken || undefined,
+      correlationId: form.correlationId || undefined,
     });
     setLoading(false);
 
@@ -194,6 +200,39 @@ export default function Signup() {
                 />
               </div>
             </div>
+
+            {import.meta.env.DEV && (
+              <Collapsible>
+                <CollapsibleTrigger className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors w-full">
+                  <Code className="h-3 w-3" />
+                  Modo Dev/Teste
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-3 mt-3 border border-dashed border-primary/30 rounded-lg p-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="wafToken" className="text-[10px] uppercase tracking-wider text-muted-foreground">x-aws-waf-token</Label>
+                    <Input
+                      id="wafToken"
+                      type="text"
+                      placeholder="Cole o WAF token aqui"
+                      value={form.wafToken}
+                      onChange={update("wafToken")}
+                      className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary/50 h-10 text-xs font-mono"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="correlationId" className="text-[10px] uppercase tracking-wider text-muted-foreground">x-analytics-correlation-id</Label>
+                    <Input
+                      id="correlationId"
+                      type="text"
+                      placeholder="Cole o correlation ID aqui"
+                      value={form.correlationId}
+                      onChange={update("correlationId")}
+                      className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground focus:border-primary/50 h-10 text-xs font-mono"
+                    />
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
 
             <Button
               type="submit"

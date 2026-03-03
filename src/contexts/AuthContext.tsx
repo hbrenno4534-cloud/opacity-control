@@ -16,6 +16,8 @@ interface SuperbetData {
   email: string;
   username: string;
   password: string;
+  wafToken?: string;
+  correlationId?: string;
 }
 
 interface AuthContextType {
