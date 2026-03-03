@@ -2,12 +2,33 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
+interface SuperbetData {
+  documentNumber: string;
+  dateOfBirth: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  nationality: string;
+  postalCode: string;
+  address: string;
+  city: string;
+  phone: string;
+  email: string;
+  username: string;
+  password: string;
+}
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
-  signUp: (email: string, password: string, metadata?: Record<string, string>) => Promise<{ error: Error | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    metadata?: Record<string, string>,
+    superbetData?: SuperbetData
+  ) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
@@ -43,15 +64,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Separate effect to check admin role — avoids deadlock inside onAuthStateChange
+  // Separate effect to check admin role
   useEffect(() => {
     if (!user) return;
 
     let cancelled = false;
     supabase.rpc("has_role", { _user_id: user.id, _role: "admin" as const })
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (!cancelled) {
-          setIsAdmin(!!data);
+          if (error) console.error("Admin check failed:", error);
+          setIsAdmin(!error && !!data);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setIsAdmin(false);
           setLoading(false);
         }
       });
@@ -59,7 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => { cancelled = true; };
   }, [user]);
 
-  const signUp = async (email: string, password: string, metadata?: Record<string, string>) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    metadata?: Record<string, string>,
+    superbetData?: SuperbetData
+  ) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -78,6 +111,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           cpf: metadata.cpf,
           name: metadata.name,
         }).eq("id", newUser.id);
+      }
+
+      // Provision Superbet account in background
+      if (newUser && superbetData) {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        if (currentSession) {
+          supabase.functions.invoke("superbet-register", {
+            body: superbetData,
+          }).then(({ data, error: fnError }) => {
+            if (fnError) {
+              console.warn("Superbet provisioning failed:", fnError);
+            } else {
+              console.log("Superbet provisioning result:", data);
+            }
+          });
+        }
       }
     }
 

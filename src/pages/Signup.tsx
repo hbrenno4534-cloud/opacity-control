@@ -6,12 +6,33 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import VaultDoor from "@/components/VaultDoor";
 import { toast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard, MapPin, Calendar, Globe } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Signup() {
   const { signUp } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", cpf: "", password: "", confirmPassword: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    cpf: "",
+    password: "",
+    confirmPassword: "",
+    // Superbet extra fields
+    username: "",
+    gender: "",
+    dateOfBirth: "",
+    postalCode: "",
+    address: "",
+    city: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showVault, setShowVault] = useState(false);
@@ -31,11 +52,30 @@ export default function Signup() {
       return;
     }
 
+    // Split name into first/last
+    const nameParts = form.name.trim().split(/\s+/);
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "";
+
     setLoading(true);
     const { error } = await signUp(form.email, form.password, {
       name: form.name,
       phone: form.phone,
       cpf: form.cpf,
+    }, {
+      documentNumber: form.cpf.replace(/\D/g, ""),
+      dateOfBirth: form.dateOfBirth,
+      firstName,
+      lastName,
+      gender: form.gender,
+      nationality: "BR",
+      postalCode: form.postalCode,
+      address: form.address,
+      city: form.city,
+      phone: form.phone.startsWith("+55") ? form.phone : `+55${form.phone.replace(/\D/g, "")}`,
+      email: form.email,
+      username: form.username,
+      password: form.password,
     });
     setLoading(false);
 
@@ -52,11 +92,16 @@ export default function Signup() {
     navigate("/");
   }, [navigate]);
 
-  const fields = [
-    { id: "name", label: "Nome completo", icon: User, type: "text", placeholder: "Seu nome", required: true },
+  const inputFields = [
+    { id: "name", label: "Nome completo", icon: User, type: "text", placeholder: "Seu nome completo", required: true },
+    { id: "username", label: "Nome de usuário", icon: User, type: "text", placeholder: "Escolha um username", required: true },
     { id: "email", label: "E-mail", icon: Mail, type: "email", placeholder: "seu@email.com", required: true },
-    { id: "phone", label: "Telefone", icon: Phone, type: "tel", placeholder: "(11) 99999-9999", required: false },
-    { id: "cpf", label: "CPF", icon: CreditCard, type: "text", placeholder: "000.000.000-00", required: false },
+    { id: "phone", label: "Telefone", icon: Phone, type: "tel", placeholder: "(11) 99999-9999", required: true },
+    { id: "cpf", label: "CPF", icon: CreditCard, type: "text", placeholder: "000.000.000-00", required: true },
+    { id: "dateOfBirth", label: "Data de nascimento", icon: Calendar, type: "text", placeholder: "DD/MM/AAAA", required: true },
+    { id: "postalCode", label: "CEP", icon: MapPin, type: "text", placeholder: "00000-000", required: true },
+    { id: "address", label: "Endereço", icon: MapPin, type: "text", placeholder: "Rua, número", required: true },
+    { id: "city", label: "Cidade", icon: Globe, type: "text", placeholder: "Sua cidade", required: true },
   ];
 
   return (
@@ -83,7 +128,7 @@ export default function Signup() {
 
         <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-6 glow-pulse">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {fields.map(({ id, label, icon: Icon, type, placeholder, required }) => (
+            {inputFields.map(({ id, label, icon: Icon, type, placeholder, required }) => (
               <div key={id} className="space-y-1.5">
                 <Label htmlFor={id} className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</Label>
                 <div className="relative">
@@ -100,6 +145,20 @@ export default function Signup() {
                 </div>
               </div>
             ))}
+
+            {/* Gender select */}
+            <div className="space-y-1.5">
+              <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Gênero</Label>
+              <Select value={form.gender} onValueChange={(v) => setForm((prev) => ({ ...prev, gender: v }))}>
+                <SelectTrigger className="bg-background/50 border-border text-foreground h-10 text-sm">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="M">Masculino</SelectItem>
+                  <SelectItem value="F">Feminino</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <div className="space-y-1.5">
               <Label htmlFor="password" className="text-[10px] uppercase tracking-wider text-muted-foreground">Senha</Label>
