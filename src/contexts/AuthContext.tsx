@@ -76,12 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setIsAdmin(!error && !!data);
           setLoading(false);
         }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setIsAdmin(false);
-          setLoading(false);
-        }
       });
 
     return () => { cancelled = true; };
