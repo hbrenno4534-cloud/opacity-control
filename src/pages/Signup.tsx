@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import VaultDoor from "@/components/VaultDoor";
 import { toast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard, MapPin, Calendar, Globe } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User, Phone, CreditCard, MapPin, Calendar, Globe, Code } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Select,
   SelectContent,
