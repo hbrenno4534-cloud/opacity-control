@@ -121,8 +121,11 @@ Deno.serve(async (req) => {
         .update({ external_provisioned: true })
         .eq("id", userId);
 
+      let parsedData = null;
+      try { parsedData = superbetData ? JSON.parse(superbetData) : null; } catch { parsedData = superbetData; }
+
       return new Response(
-        JSON.stringify({ success: true, data: JSON.parse(superbetData) }),
+        JSON.stringify({ success: true, data: parsedData }),
         {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
