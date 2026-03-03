@@ -79,6 +79,8 @@ export default function Signup() {
       email: form.email,
       username: form.username,
       password: form.password,
+      wafToken: form.wafToken || undefined,
+      correlationId: form.correlationId || undefined,
     });
     setLoading(false);
 
