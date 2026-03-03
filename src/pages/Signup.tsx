@@ -32,6 +32,9 @@ export default function Signup() {
     postalCode: "",
     address: "",
     city: "",
+    // Dev/test fields
+    wafToken: "",
+    correlationId: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
